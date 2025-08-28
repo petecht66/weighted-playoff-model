@@ -13,8 +13,9 @@ Tier1 <- list("DAYTONA 500", "Coca-Cola 600", "Brickyard 400 Presented by PPG", 
 Tier2 <- list("XFINITY 500", "Bass Pro Shops Night Race", "Goodyear 400", "FireKeepers Casino 400")
 
 # Tier 3: More important than a regular race
+Tier3 <- list("Grant Park 165", "YellaWood 500", "Ally 400", "AutoTrader EchoPark Automotive 400")
 
-# Tier 4 is the remaining races, list does not need to be made
+# Tier 4 is the remaining races, list does not need to be made, as multiplier will be 1x
 
 # create 2024 playoff model function
 # weighted_points_2024 <- function(Race, Pts){
