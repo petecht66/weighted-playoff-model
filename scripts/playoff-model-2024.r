@@ -18,7 +18,31 @@ Tier3 <- list("Grant Park 165", "YellaWood 500", "Ally 400", "AutoTrader EchoPar
 # Tier 4 is the remaining races, list does not need to be made, as multiplier will be 1x
 
 # create 2024 playoff model function
-# weighted_points_2024 <- function(Race, Pts){
-#    if()
-   # return(weighted_points)
-# }
+create_2024_weighted_points <- function(dataFrame){
+   weightedPts <- numeric(nrow(dataFrame))
+
+  for(performance in seq_len(nrow(dataFrame))){ # loop through every row in data frame
+    Race <- dataFrame$Name[performance]
+    Pts <- dataFrame$Pts[performance]
+
+    # Assign multipliers depending on the race
+    if (Race %in% Tier1) {
+      multiplier <- 1.3
+    } else if (Race %in% Tier2) {
+      multiplier <- 1.2
+    } else if (Race %in% Tier3) {
+      multiplier <- 1.1
+    } else {
+      multiplier <- 1.0
+    }
+    # Apply multiplier
+    weightedPts[performance] <- Pts * multiplier
+  }
+  dataFrame$weightedPts <- weightedPts
+  return(dataFrame)
+}
+
+weighted_race_data_2024 <- create_2024_weighted_points(race_data_2024)
+weighted_race_data_2024
+
+write.csv(weighted_race_data_2024, "2024 Race Data With Weighted Points.csv")
