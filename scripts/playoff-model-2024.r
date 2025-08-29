@@ -45,4 +45,36 @@ create_2024_weighted_points <- function(dataFrame){
 weighted_race_data_2024 <- create_2024_weighted_points(race_data_2024)
 weighted_race_data_2024
 
-write.csv(weighted_race_data_2024, "2024 Race Data With Weighted Points.csv")
+create_updated_2024_standings <- function(dataFrame) {
+  # Get unique drivers
+  drivers <- unique(dataFrame$Driver)
+  
+  # Empty vector to store totals
+  weighted_totals <- numeric(length(drivers))
+  original_totals <- numeric(length(drivers))
+  
+  # Loop over each driver and sum their weightedPts
+  for (i in seq_along(drivers)) {
+    d <- drivers[i]
+    weighted_totals[i] <- sum(dataFrame$weightedPts[dataFrame$Driver == d], na.rm = TRUE)
+    original_totals[i] <- sum(dataFrame$Pts[dataFrame$Driver == d], na.rm = TRUE)
+  }
+  
+  # Build a standings data frame
+  standings <- data.frame(
+    Driver = drivers,
+    totalWeightedPts = weighted_totals,
+    totalUnweightedPts = original_totals
+  )
+  
+  # Order by descending points
+  standings <- standings[order(-standings$totalWeightedPts), ]
+  rownames(standings) <- NULL
+  
+  return(standings)
+}
+
+weighted_standings_2024 <- create_updated_2024_standings(weighted_race_data_2024)
+weighted_standings_2024
+
+# write.csv(weighted_race_data_2024, "2024 Race Data With Weighted Points.csv")
